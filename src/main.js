@@ -3,20 +3,37 @@
 import { loadHomePage } from './modules/home.js';
 import { loadGamePage } from './modules/game.js';
 import { loadResultsPage } from './modules/results.js';
+import {  Routes,validLevels } from './constants/index.js';
+import { showNotFoundPage } from './modules/notfound.js';
 
 function router() {
-  const hash = window.location.hash || '#home';
+  const hash = window.location.hash || Routes.HOME;
 
-  if (hash === '#home') {
-    loadHomePage();
-  } else if (hash === '#game') {
-    loadGamePage();
-  } else if (hash === '#results') {
-    loadResultsPage();
-  } else {
-    // fallback
-    loadHomePage();
-  }
+ switch (hash) { 
+
+  case Routes.HOME: 
+
+    loadHomePage(); 
+
+    break; 
+
+  case Routes.GAME: 
+
+    loadGamePage(); 
+
+    break; 
+
+  case Routes.RESULTS: 
+
+    loadResultsPage(); 
+
+    break; 
+
+  default: 
+
+    showNotFoundPage(); 
+
+} 
 }
 
 // On first load
@@ -26,16 +43,22 @@ window.addEventListener('DOMContentLoaded', router);
 window.addEventListener('hashchange', router);
 
 // Nav functions:
+
 window.startLevel = (level) => {
+  if (!validLevels.includes(level)) {
+    console.error('Invalid level selected:', level);
+    showNotFoundPage();
+    return;
+  }
   sessionStorage.setItem('selectedLevel', level);
-  window.location.hash = '#game';
+  window.location.hash = Routes.GAME;
 };
 
 window.viewResults = () => {
-  window.location.hash = '#results';
+  window.location.hash = Routes.RESULTS;
 };
 
 window.goHome = () => {
-  window.location.hash = '#home';
+  window.location.hash = Routes.HOME;
 };
 // Initialize the app

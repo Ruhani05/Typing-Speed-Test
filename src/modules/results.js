@@ -1,5 +1,6 @@
-export function loadResultsPage() {
-  document.title = 'Typing Game - Results';
+import { PageTitles } from "../constants";
+export const loadResultsPage = () => {
+  document.title = PageTitles.RESULTS;
   document.querySelector('#app').innerHTML = `
     <div class="container">
       <h1>📊 Test Results (This Session)</h1>

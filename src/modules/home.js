@@ -1,15 +1,25 @@
-export function loadHomePage() {
-  document.title = 'Typing Speed Game 🏎️';
+import { PageTitles } from "../constants";
+export const loadHomePage = () => {
+  document.title = PageTitles.HOME;
   document.querySelector('#app').innerHTML = `
     <div class="container">
       <h1>🔥 Typing Speed Game 🔥</h1>
       <p>Select your level:</p>
       <div class="levels">
-        <button onclick="startLevel('easy')">Easy</button>
-        <button onclick="startLevel('medium')">Medium</button>
-        <button onclick="startLevel('hard')">Hard</button>
+        <button id="start-easy">Easy</button> 
+
+<button id="start-medium">Medium</button> 
+
+<button id="start-hard">Hard</button> 
       </div>
-      <button onclick="viewResults()">View Results 📊</button>
+      <button id="view-results">View Results 📊</button>
     </div>
   `;
+['easy', 'medium', 'hard'].forEach(level => { 
+
+  document.querySelector(`#start-${level}`).addEventListener('click', () => startLevel(level)); 
+
+}); 
+
+document.querySelector('#view-results').addEventListener('click', viewResults); 
 }

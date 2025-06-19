@@ -1,7 +1,8 @@
 import { TypingTest } from './TypingTest.js';
+import { PageTitles } from '../constants/index.js';
 
-export function loadGamePage() {
-  document.title = 'Typing Game - Level';
+export const loadGamePage = () => {
+  document.title = PageTitles.GAME;
   document.querySelector('#app').innerHTML = `
     <div class="container">
       <h1 id="levelTitle">Typing Test</h1>
@@ -14,11 +15,13 @@ export function loadGamePage() {
         <div>Accuracy: <span id="accuracy">0%</span></div>
       </div>
       <button id="startBtn">Start Test</button>
-      <button onclick="goHome()">🏠 Back to Home</button>
+      <button id="go-home">🏠 Back to Home</button>
     </div>
   `;
 
   const level = sessionStorage.getItem('selectedLevel') || 'easy';
   document.getElementById('levelTitle').innerText = `Level: ${level.toUpperCase()}`;
   window.typingTest = new TypingTest(level);
+
+  document.querySelector('#go-home').addEventListener('click', goHome);
 }

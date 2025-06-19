@@ -1,8 +1,10 @@
+import { LEVEL_TIME } from "../constants";
+import {QUOTES } from "../constants";
 export class TypingTest {
   constructor(level, timeLimit = 60) {
     this.level = level;
-    this.timeLimit = this.level === 'easy' ? 60 : this.level === 'medium' ? 80 : 100;
-    this.timer = this.level === 'easy' ? 60 : this.level === 'medium' ? 80 : 100;
+    this.timeLimit = LEVEL_TIME[level] || timeLimit; // Default to 60 seconds if level not found
+    this.timer = this.timeLimit;
     this.timerInterval = null;
     this.quote = '';
     this.currentIndex = 0;
@@ -20,22 +22,7 @@ export class TypingTest {
   }
 
   getRandomQuote() {
-    const easy = [
-      "The quick brown fox jumps over the lazy dog.",
-      "Typing is fun and easy."
-    ];
-    const medium = [
-      "Practice daily to improve your typing skills. Advanced typing requires accuracy under pressure.",
-      "Consistency beats speed in the long run. Typing is a skill that can be mastered."
-    ];
-    const hard = [
-      "Advanced typing requires accuracy under pressure. In the world of technology, typing is a fundamental skill that opens doors to endless possibilities.",
-      "Errors should be minimized while maintaining speed. The keyboard is a powerful tool that, when mastered, can transform your digital experience.",
-     
-      
-    ];
-
-    const pool = this.level === 'easy' ? easy : this.level === 'medium' ? medium : hard;
+    const pool = this.level === 'easy' ? QUOTES.easy : this.level === 'medium' ? QUOTES.medium : QUOTES.hard;
     const index = Math.floor(Math.random() * pool.length);
     return pool[index];
   }
@@ -146,7 +133,7 @@ export class TypingTest {
 }
 
   updateStats(correctChars, totalTyped) {
-    const timeUsed = this.level === 'easy' ? 60 : this.level === 'medium' ? 80 : 100 - this.timer;
+    const timeUsed = this.timeLimit - this.timer;
     const minutes = timeUsed / 60 || 1 / 60;
     const wpm = Math.round((correctChars / 5) / minutes);
     const cpm = Math.round(correctChars / minutes);
@@ -161,7 +148,7 @@ export class TypingTest {
     this.quoteInput.disabled = true;
     this.startBtn.innerText = 'Restart Test';
 
-    const timeUsed = this.level === 'easy' ? 60 : this.level === 'medium' ? 80 : 100- this.timer;
+    const timeUsed = this.timeLimit - this.timer;
     const wpm = parseInt(this.wpmEl.innerText);
     const accuracy = parseInt(this.accuracyEl.innerText);
 
@@ -171,6 +158,7 @@ export class TypingTest {
       wpm: wpm,
       accuracy: accuracy,
       time: timeUsed
+      //timeUsed
     });
     sessionStorage.setItem('testResults', JSON.stringify(results));
   }
