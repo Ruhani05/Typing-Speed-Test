@@ -126,6 +126,7 @@ export class TypingTest {
  
   if (allCorrect) {
     clearInterval(this.timerInterval);
+    this.updateStats(correctChars, totalTyped);
     this.finishTest();
   }
  
