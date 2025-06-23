@@ -25,7 +25,7 @@ Single HTML entry (`index.html`) with `main.js` as the entry point and client-si
 ## Getting Started
 
 1.  Clone the repository: `git clone https://github.com/Ruhani05/Typing-Speed-Test`
-2.  Install dependencies: `npm install` or `yarn install`
+2.  Install dependencies: `npm install` or `yarn install`, then `npm install vite --save-dev`
 3.  Start the development server: `npm run dev` or `yarn dev`
 
 
